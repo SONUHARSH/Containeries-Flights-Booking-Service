@@ -9,11 +9,14 @@ volumes:
 services:
   api-gateway:
     build: ./API-Gateway
-    #image: kumarsonu12/containerised-microservices_api-gateway
+    #image: kumarsonu12/containerised-microservices_api-gateway(git colan link)
     networks:
       - micro-net
     ports:
       - "3002:3002"
+    volumes:
+      - ./API-Gateway:/developer/nodejs/api-gateway
+      - api-gateway-node-modules:/developer/nodejs/api-gateway/node_modules
     labels:
       kompose.service.type: LoadBalancer
   booking-service:
@@ -23,6 +26,9 @@ services:
       - micro-net
     ports:
       - "4000:4000"
+    volumes:
+      - ./Flight-Booking-Service:/developer/nodejs/booking-service
+      - booking-service-node-modules:/developer/nodejs/booking-service/node_modules  
     labels:
       kompose.service.type: LoadBalancer    
   flights-service:
@@ -32,12 +38,14 @@ services:
       - micro-net
     ports: 
       - "3000:3000"
+    volumes:
+      - ./Flights:/developer/nodejs/flights-service 
+      - flights-service-node-modules:/developer/nodejs/flights-service/node_modules 
     labels:
       kompose.service.type: LoadBalancer
 
 
   
-    
 # docker compose up -d // run all containers in detached mode kind of like -dit
 # docker compose down
 
